@@ -7,7 +7,6 @@
 
 Grep pattern based whitelist available
 Autoremoves proxy pre-pend
-
 Keeps track of how many lines of inputfile checked in `prog.txt`
 
 

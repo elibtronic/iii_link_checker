@@ -2,6 +2,7 @@
 import urllib2
 import socket
 import os.path
+import datetime
 from random import randint
 from time import sleep
 
@@ -14,18 +15,18 @@ def check_url(url_input):
 		resp = urllib2.urlopen(req,timeout = 5)
 	
 	except urllib2.HTTPError as e:
-		report.write(str(e.code)+","+str(url_input))
+		report.write(datetime.datetime.now().strftime("%d-%m-%Y")+","+str(e.code)+","+str(url_input))
 		report.flush()
 		print prog,",",str(e.code)+","+str(url_input)
 
 	except:
-		report.write("TIMEOUT,"+str(url_input))
+		report.write(datetime.datetime.now().strftime("%d-%m-%Y")+","+"TIMEOUT,"+str(url_input))
 		report.flush()
 		print prog,",TIMEOUT,"+str(url_input)
 	
 	else:
 		if str(resp.getcode()) != "200":
-			report.write(str(resp.getcode())+","+str(url_input)),
+			report.write(datetime.datetime.now().strftime("%d-%m-%Y")+","+str(resp.getcode())+","+str(url_input))
 			report.flush()
 		print prog,",",str(resp.getcode())+","+str(url_input),
 
