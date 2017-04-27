@@ -1,33 +1,58 @@
 
 import urllib2
 import socket
+import os.path
 from random import randint
 from time import sleep
 
-report = open("report.csv","a")
 
-prog = 1
 
-for line in open("out.txt"):
-	url_check = line.split(",")
+def check_url(url_input):
+	url_check = url_input.split(",")
 	req = urllib2.Request(url_check[1].strip(" "))
 	try:
 		resp = urllib2.urlopen(req,timeout = 5)
 	
 	except urllib2.HTTPError as e:
-		report.write(str(e.code)+","+str(line))
+		report.write(str(e.code)+","+str(url_input))
 		report.flush()
-		print prog,",",str(e.code)+","+str(line)
+		print prog,",",str(e.code)+","+str(url_input)
 
 	except:
-		report.write("TIMEOUT,"+str(line))
+		report.write("TIMEOUT,"+str(url_input))
 		report.flush()
-		print prog,",TIMEOUT,"+str(line)
+		print prog,",TIMEOUT,"+str(url_input)
 	
 	else:
-		report.write(str(resp.getcode())+","+str(line)),
-		report.flush()
-		print prog,",",str(resp.getcode())+","+str(line),
+		if str(resp.getcode()) != "200":
+			report.write(str(resp.getcode())+","+str(url_input)),
+			report.flush()
+		print prog,",",str(resp.getcode())+","+str(url_input),
 
-	prog += 1
-	sleep(randint(1,5)) #Take it easy on requests
+
+
+if __name__ == "__main__":
+
+	prog = 0
+	CHECKCYCLE = 5
+	
+	report = open("report.csv","a")
+	uFile = open("short.txt","r")
+	
+	if os.path.exists("prog.txt"):
+		prog = int(open("prog.txt","r").readline())
+		
+	if prog != 0:
+		for i in range(0, prog):
+			uFile.readline()
+	
+	for uToCheck in uFile:
+		check_url(uToCheck)
+		
+		prog += 1
+	
+		sleep(randint(0,3)) #Take it easy on requests
+		if (prog  % CHECKCYCLE == 0):
+			pfile = open("prog.txt","w")
+			pfile.write(str(prog))
+			pfile.close()
