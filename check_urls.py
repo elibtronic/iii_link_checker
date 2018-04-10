@@ -38,7 +38,7 @@ if __name__ == "__main__":
 	CHECKCYCLE = 5
 	
 	report = open("report.csv","a")
-	uFile = open("short.txt","r")
+	uFile = open("out.txt","r")
 	
 	if os.path.exists("prog.txt"):
 		prog = int(open("prog.txt","r").readline())

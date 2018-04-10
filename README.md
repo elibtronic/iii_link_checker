@@ -5,10 +5,14 @@
 2.  Checks valid urls using [urllib2](https://docs.python.org/2/library/urllib2.html) 
 3. Only keeps track of non 200 codes in result csv file, looks like `HTML_Status_Code,bib_id,url`
 
+NTS. This is how to export the data from the relevant file.
+
+![screen cap](iii_url_checker.JPG) 
+
+
 Grep pattern based whitelist available
 Autoremoves proxy pre-pend
 Keeps track of how many lines of inputfile checked in `prog.txt`
-
 
 
 `prep.py` - will extract out URLS and bibs from input file, one per line, and does the whitelisting
